@@ -6,3 +6,6 @@
 * actuators
 * cartridges
 * doubler
+* O-rings
+* Squonk
+
