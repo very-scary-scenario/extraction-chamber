@@ -33,6 +33,7 @@
   margin: 0;
   padding: 0;
   border: none;
+  box-sizing: border-box;
 }
 
 ::selection {
@@ -47,6 +48,7 @@ html {
 body {
   overflow: hidden;
   font-family: 'Syncopate', serif;
+  font-weight: 400;
   text-transform: lowercase;
   background-color: #d66;
 
@@ -104,7 +106,6 @@ body {
       position: absolute;
       text-align: center;
       width: 100%;
-      box-sizing: border-box;
       padding: 10vh 30vw 0;
       top: 70vh;
       transform-origin: 50% 0;
@@ -129,6 +130,63 @@ body {
         &.engaged {
           bottom: 5vw;
         }
+      }
+    }
+  }
+
+  #shop {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: .8em;
+    margin: 1em 2em;
+
+    display: table;
+
+    li {
+      display: table-row;
+      list-style: none;
+      color: transparent;
+      text-shadow: black 0 0 .4em;
+      transition: text-shadow 0.3s;
+      margin: 1em;
+
+      div {
+        display: table-cell;
+        padding: .3em;
+
+        strong {
+          font-size: 1.3em;
+        }
+
+        .description {
+          font-size: 0.8em
+          display: block;
+        }
+      }
+
+      &:hover {
+        text-shadow: black 0 0 .05em;
+        cursor: pointer;
+        transition: text-shadow 0.1s;
+      }
+
+      &::before {
+        font-size: 1.2em;
+        display: table-cell;
+        vertical-align: middle;
+        content: attr(data-value);
+        padding-right: 2em;
+        font-weight: 700;
+        text-align: right;
+        .sprite('bottle.png');
+        background-size: 2em auto;
+        background-position: center right;
+      }
+
+      &::after {
+        content: attr(data-owned) " ";
+        display: table-cell;
       }
     }
   }
