@@ -126,6 +126,10 @@ for (var i = 0; i < shopElements.length; i++) {
   shopElement.addEventListener('click', game.purchaser(itemName));
 }
 
+shopList.addEventListener('click', function() {
+  shopList.classList.toggle('open');
+});
+
 function handleClick(e) {
   e.preventDefault();
   e.stopPropagation();
