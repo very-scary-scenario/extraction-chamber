@@ -1,7 +1,7 @@
 var game;
 var liquidElement = document.getElementById('liquid');
 var bottleList = document.getElementById('bottles');
-var actuatorList = document.getElementById('actuators');
+
 
 function extend(base, sub) {
   sub.prototype = Object.create(base.prototype);
@@ -26,6 +26,7 @@ function Game() {
   self.currentBottleMl = 0;
   self.bottleCount = 0;
   self.actuatorDelay = 1000;
+  self.actuators = [];
 
   self.handleClick = function() {
     new Actuator();
@@ -55,7 +56,7 @@ function Game() {
 function Actuator() {
   var self = this;
   self.element = document.createElement('li');
-  actuatorList.appendChild(self.element);
+  document.getElementById('actuators-' + (game.actuators.length % 2).toString(10)).appendChild(self.element);
 
   self.engage = function() {
     self.element.classList.add('engaged');
@@ -68,6 +69,7 @@ function Actuator() {
     setTimeout(self.engage, game.actuatorDelay + Math.random() * (game.actuatorDelay/2));
   };
 
+  game.actuators.push(self);
   self.engage();
 }
 
