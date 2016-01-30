@@ -1,5 +1,5 @@
 var game;
-var scoreElement = document.getElementById('score');
+var liquidElement = document.getElementById('liquid');
 
 function extend(base, sub) {
   sub.prototype = Object.create(base.prototype);
@@ -24,7 +24,7 @@ function Game() {
   };
 
   self.update = function() {
-    scoreElement.innerHTML = self.score.toPrecision(4);
+    liquidElement.style.height = self.score.toString(10) + 'px';
   };
 }
 
@@ -44,7 +44,7 @@ function animate() {
 document.addEventListener('click', function(e) {
   e.preventDefault();
   e.stopPropagation();
-  game.score += 0.001;
+  game.score += 50;
 });
 
 animate();
