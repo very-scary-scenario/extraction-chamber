@@ -14,13 +14,17 @@ function Game() {
   var self = this;
   self.score = 0;
 
+  self.getScoreDiff = function() {
+    return 0;
+  };
+
   self.step = function() {
-    self.score += 1;
+    self.score += self.getScoreDiff();
     self.update();
   };
 
   self.update = function() {
-    scoreElement.innerHTML = self.score;
+    scoreElement.innerHTML = self.score.toPrecision(4);
   };
 }
 
@@ -36,6 +40,12 @@ function animate() {
   requestFrame(animate);
   game.step();
 }
+
+document.addEventListener('click', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  game.score += 0.001;
+});
 
 animate();
 console.log(game);
