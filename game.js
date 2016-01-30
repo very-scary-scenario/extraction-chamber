@@ -46,7 +46,9 @@ function Game() {
   };
 
   self.purchaser = function(itemName) {
-    return function() {
+    return function(e) {
+      e.preventDefault();
+      e.stopPropagation();
       var shopElement = shopList.querySelector('[data-item="' + itemName + '"]');
       var value = parseInt(shopElement.getAttribute('data-value'), 10);
       if (self.bottleCount >= value) {
@@ -124,10 +126,12 @@ for (var i = 0; i < shopElements.length; i++) {
   shopElement.addEventListener('click', game.purchaser(itemName));
 }
 
-document.addEventListener('click', function(e) {
+function handleClick(e) {
   e.preventDefault();
   e.stopPropagation();
   game.handleClick();
-});
+}
+document.getElementById('bottle').addEventListener('touchend', handleClick);
+document.getElementById('bottle').addEventListener('click', handleClick);
 
 console.log(game);

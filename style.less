@@ -47,6 +47,11 @@ html {
 
 body {
   overflow: hidden;
+  // necessary for ios:
+  position: fixed;
+  height: 100%;
+  width: 100%;
+
   font-family: 'Syncopate', serif;
   font-weight: 400;
   text-transform: lowercase;
@@ -70,6 +75,7 @@ body {
       background-size: auto 40vh;
       background-position: center 100%;
 
+      cursor: pointer;
       position: absolute;
       width: 100%;
       height: 40vh;
@@ -109,6 +115,7 @@ body {
       padding: 10vh 30vw 0;
       top: 70vh;
       transform-origin: 50% 0;
+      pointer-events: none;
 
       &.left {
         transform: rotate(90deg);
@@ -136,7 +143,7 @@ body {
 
   #shop {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     font-size: .8em;
     margin: 1em 2em;
@@ -167,7 +174,6 @@ body {
 
       &:hover {
         text-shadow: black 0 0 .05em;
-        cursor: pointer;
         transition: text-shadow 0.1s;
       }
 
