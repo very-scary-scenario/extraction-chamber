@@ -12,19 +12,14 @@ function extend(base, sub) {
 
 function Game() {
   var self = this;
-  self.score = 0;
-
-  self.getScoreDiff = function() {
-    return 0;
-  };
+  self.currentBottleMl = 0;
 
   self.step = function() {
-    self.score += self.getScoreDiff();
     self.update();
   };
 
   self.update = function() {
-    liquidElement.style.height = self.score.toString(10) + 'px';
+    liquidElement.style.height = ((self.currentBottleMl / 30) * 100).toString(10) + '%';
   };
 }
 
@@ -44,7 +39,7 @@ function animate() {
 document.addEventListener('click', function(e) {
   e.preventDefault();
   e.stopPropagation();
-  game.score += 50;
+  game.currentBottleMl += 1;
 });
 
 animate();
