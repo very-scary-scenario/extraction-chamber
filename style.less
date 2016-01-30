@@ -79,34 +79,44 @@ body {
       }
     }
 
-    #bottles li {
-      background-image: url(bottle.png);
-      .sprite();
-      display: inline-block;
-      width: 10vw;
-      height: 10vh;
-      .swim();
+    #bottles {
+      position: absolute;
+      top: 0;
+      width: 100%;
+
+      li {
+        background-image: url(bottle.png);
+        .sprite();
+        display: inline-block;
+        width: 10vw;
+        height: 10vh;
+        .swim();
+      }
     }
     #actuators {
-      position: absolute;
-      width: 100%;
+      position: relative;
+      margin: 0 auto;
+      width: 40vh;
       height: 40vh;
       top: 50vh;
 
       li {
-        float: left;
+        float: right;
         display: inline-block;
         background-image: url(actuator.png);
         .sprite();
         width: 10vw;
         height: 10vh;
+        transform: rotate(-90deg);
 
-        &:nth-child(2n) {
-          float: right;
+        &:nth-child(2n+1) {
+          float: left;
+          clear: both;
+          transform: rotate(90deg);
         }
 
         &.engaged {
-          transform: translateY(-4vh);
+          margin: 0 5vw;
         }
       }
     }

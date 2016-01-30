@@ -25,6 +25,7 @@ function Game() {
   var self = this;
   self.currentBottleMl = 0;
   self.bottleCount = 0;
+  self.actuatorDelay = 1000;
 
   self.handleClick = function() {
     new Actuator();
@@ -64,7 +65,7 @@ function Actuator() {
 
   self.disengage = function() {
     self.element.classList.remove('engaged');
-    setTimeout(self.engage, 1000);
+    setTimeout(self.engage, game.actuatorDelay + Math.random() * (game.actuatorDelay/2));
   };
 
   self.engage();
