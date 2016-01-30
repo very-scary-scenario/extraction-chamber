@@ -22,6 +22,12 @@
   animation-iteration-count: infinite, infinite;
 }
 
+.sprite() {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -73,16 +79,35 @@ body {
       }
     }
 
-    #bottles {
+    #bottles li {
+      background-image: url(bottle.png);
+      .sprite();
+      display: inline-block;
+      width: 10vw;
+      height: 10vh;
+      .swim();
+    }
+    #actuators {
+      position: absolute;
+      width: 100%;
+      height: 40vh;
+      top: 50vh;
+
       li {
-        background-image: url(bottle.png);
-        background-size: contain;
-        background-position: center;
-        background-repeat: no-repeat;
+        float: left;
         display: inline-block;
+        background-image: url(actuator.png);
+        .sprite();
         width: 10vw;
         height: 10vh;
-        .swim();
+
+        &:nth-child(2n) {
+          float: right;
+        }
+
+        &.engaged {
+          transform: translateY(-4vh);
+        }
       }
     }
   }
