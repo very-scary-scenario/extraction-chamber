@@ -1,3 +1,27 @@
+@keyframes swim-rotate {
+  from, to {
+    transform: rotate(15deg);
+  }
+  50% {
+    transform: rotate(-15deg);
+  }
+}
+
+@keyframes swim-scale {
+  from, to {
+    background-size: auto 100%;
+  }
+  50% {
+    background-size: auto 80%;
+  }
+}
+
+.swim() {
+  animation-name: swim-rotate, swim-scale;
+  animation-duration: 1s, 1.2s;
+  animation-iteration-count: infinite, infinite;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -29,7 +53,7 @@ body {
     #bottle {
       background-image: url(no-lid-empty.png);
       background-repeat: no-repeat;
-      background-size: contain;
+      background-size: auto 40vh;
       background-position: center 100%;
 
       position: absolute;
@@ -53,9 +77,12 @@ body {
       li {
         background-image: url(bottle.png);
         background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
         display: inline-block;
-        width: 2vw;
-        height: 2vh;
+        width: 10vw;
+        height: 10vh;
+        .swim();
       }
     }
   }
