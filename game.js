@@ -26,6 +26,8 @@ function Game() {
   var self = this;
   self.currentBottleMl = 0;
   self.bottleCount = 0;
+  self.baseClickValue = 1;
+  self.clickMultiplier = 1;
   self.actuatorDelay = 1000;
   self.itemsOwned = {
     actuator: 0,
@@ -37,7 +39,8 @@ function Game() {
   };
 
   self.itemConstructors = {
-    actuator: Actuator
+    actuator: Actuator,
+    battery: Battery
   };
 
   self.purchase = function(itemName) {
@@ -62,8 +65,25 @@ function Game() {
     };
   };
 
-  self.handleClick = function() {
-    self.currentBottleMl += 1;
+  self.handleClick = function(e) {
+    self.currentBottleMl += self.baseClickValue * self.clickMultiplier;
+
+    var batteryList = document.createElement('ul');
+    batteryList.classList.add('battery-sparks');
+
+    for (var i = 0; i < self.itemsOwned.battery; i++) {
+      var batteryElement = document.createElement('li');
+      batteryList.appendChild(batteryElement);
+    }
+
+    document.body.appendChild(batteryList);
+    batteryList.style.top = e.pageY.toString(10) + 'px';
+    batteryList.style.left = e.pageX.toString(10) + 'px';
+
+    setTimeout(function() {
+      document.body.removeChild(batteryList);
+    }, 5000);
+
     self.step();
   };
 
@@ -73,7 +93,7 @@ function Game() {
   };
 
   self.step = function() {
-    if (self.currentBottleMl >= 30) {
+    while (self.currentBottleMl >= 30) {
       self.bottleCount += 1;
       self.currentBottleMl -= 30;
     }
@@ -117,6 +137,11 @@ function Actuator() {
   self.engage();
 }
 
+function Battery() {
+  var self = this;
+  game.clickMultiplier += 1;
+}
+
 game = new Game();
 game.step();
 
@@ -131,9 +156,9 @@ shopList.addEventListener('click', function() {
 });
 
 function handleClick(e) {
+  game.handleClick(e);
   e.preventDefault();
   e.stopPropagation();
-  game.handleClick();
 }
 document.getElementById('bottle').addEventListener('touchend', handleClick);
 document.getElementById('bottle').addEventListener('click', handleClick);

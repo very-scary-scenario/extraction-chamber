@@ -16,10 +16,39 @@
   }
 }
 
+@keyframes fall { from { top: -2.5em; } }
+
+@keyframes slide {
+  from {
+    left: -2.5em;
+    top: -2.5em;
+  }
+  to {
+    opacity: 0;
+    transform: rotate(180deg);
+  }
+}
+
 .swim() {
   animation-name: swim-rotate, swim-scale;
   animation-duration: 1s, 1.2s;
   animation-iteration-count: infinite, infinite;
+}
+
+.fall() {
+  animation-name: fall;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+.slide() {
+  animation-name: slide;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
 }
 
 .sprite(@name) {
@@ -34,6 +63,7 @@
   padding: 0;
   border: none;
   box-sizing: border-box;
+  list-style: none;
 }
 
 ::selection {
@@ -165,7 +195,6 @@ body {
     li {
       cursor: pointer;
       display: table-row;
-      list-style: none;
 
       div {
         display: table-cell;
@@ -222,6 +251,50 @@ body {
 
     &.open::before {
       transform: rotate(180deg);
+    }
+  }
+
+  .battery-sparks {
+    pointer-events: none;
+    position: absolute;
+
+    li {
+      .sprite('battery.png');
+      position: absolute;
+      top: 5em;
+      left: 3em;
+      width: 5em;
+      height: 5em;
+      opacity: 1;
+      .slide();
+
+      &:nth-child(2n) {
+        transform: rotate(270deg);
+        left: -3em;
+        top: 3em;
+      };
+      &:nth-child(3n) {
+        transform: rotate(-30deg);
+        left: -5em;
+        top: 10em;
+      };
+      &:nth-child(5n) {
+        transform: rotate(300deg);
+        left: 4em;
+      };
+      &:nth-child(7n) {
+        transform: rotate(-20deg);
+        left: -2.5em;
+        top: 12em;
+      };
+      &:nth-child(11n) {
+        transform: rotate(200deg);
+        left: 6em;
+      };
+      &:nth-child(13n) {
+        transform: rotate(-17deg);
+        left: -7em;
+      };
     }
   }
 }
