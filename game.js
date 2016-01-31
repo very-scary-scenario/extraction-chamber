@@ -1,4 +1,5 @@
 var game;
+var titleElement = document.getElementById('title');
 var liquidElement = document.getElementById('liquid');
 var bottleList = document.getElementById('bottles');
 var shopList = document.getElementById('shop');
@@ -77,6 +78,9 @@ function Game() {
   };
 
   self.handleClick = function(e) {
+    if (!titleElement.classList.contains('hidden')) {
+      titleElement.classList.add('hidden');
+    }
     self.currentBottleMl += self.baseClickValue * self.clickMultiplier;
 
     var batteryList = document.createElement('ul');
@@ -133,6 +137,8 @@ function Game() {
     bottleCountElement.innerHTML = self.bottleCount.toString(10);
     self.updateShop();
   };
+
+  setTimeout(function() { titleElement.classList.remove('hidden'); }, 1);
 }
 
 function Actuator() {
@@ -182,5 +188,3 @@ function handleClick(e) {
 }
 document.getElementById('bottle').addEventListener('touchend', handleClick);
 document.getElementById('bottle').addEventListener('click', handleClick);
-
-console.log(game);

@@ -87,8 +87,9 @@ body {
   text-transform: lowercase;
   background-color: #d66;
 
-  h1 {
-    text-shadow: black 0 0 2vw;
+  #title {
+    text-shadow: black 0 0 .4vw;
+    opacity: 1;
     color: transparent;
     position: absolute;
     width: 100%;
@@ -96,6 +97,12 @@ body {
     position: absolute;
     text-align: center;
     top: 10vh;
+    transition: opacity 2s, text-shadow 2s;
+
+    &.hidden {
+      text-shadow: black 0 0 2vw;
+      opacity: 0;
+    }
   }
 
   #containers {
