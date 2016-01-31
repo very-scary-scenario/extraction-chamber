@@ -3,6 +3,7 @@ var liquidElement = document.getElementById('liquid');
 var bottleList = document.getElementById('bottles');
 var shopList = document.getElementById('shop');
 var shopElements = shopList.querySelectorAll('li');
+var bottleCountElement = document.getElementById('bottle-count');
 
 function extend(base, sub) {
   sub.prototype = Object.create(base.prototype);
@@ -14,10 +15,18 @@ function extend(base, sub) {
 }
 
 function makeListEqual(list, count) {
-  while (count > list.querySelectorAll('li').length) {
+  var target;
+
+  if (count >= 40) {
+    target = 40 + count % 10;
+  } else {
+    target = count;
+  }
+
+  while (target > list.querySelectorAll('li').length) {
     list.appendChild(document.createElement('li'));
   }
-  while (count < list.querySelectorAll('li').length) {
+  while (target < list.querySelectorAll('li').length) {
     list.removeChild(list.querySelectorAll('li')[0]);
   }
 }
@@ -121,6 +130,7 @@ function Game() {
   self.update = function() {
     liquidElement.style.height = ((self.currentBottleMl / 30) * 100).toString(10) + '%';
     makeListEqual(bottleList, self.bottleCount);
+    bottleCountElement.innerHTML = self.bottleCount.toString(10);
     self.updateShop();
   };
 }

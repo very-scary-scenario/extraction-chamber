@@ -125,7 +125,8 @@ body {
 
     #bottles {
       position: absolute;
-      top: 0;
+      min-height: 35vh;
+      bottom: 65vh;
       width: 100%;
 
       li {
@@ -134,6 +135,26 @@ body {
         width: 10vw;
         height: 10vh;
         .swim();
+      }
+    }
+
+    .bottle-count {
+      position: absolute;
+      top: 35vh;
+      right: 1em;
+      font-size: 1.4em;
+
+      #bottle-count {
+        font-size: 1.4em;
+      }
+      &::before {
+        content: ' ';
+        display: inline-block;
+        .sprite('bottle.png');
+        width: 2em;
+        height: 2em;
+        margin-right: -.5em;
+        vertical-align: -40%;
       }
     }
 
