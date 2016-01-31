@@ -57,7 +57,7 @@ function Game() {
   self.currentBottleMl = 0;
   self.bottleCount = 0;
   self.maxBottles = 16;
-  self.baseClickValue = 30;
+  self.baseClickValue = 1;
   self.clickMultiplier = 1;
   self.nextVideoTarget = 4;
   self.actuatorValue = 0;
@@ -201,7 +201,7 @@ function Game() {
         self.currentBottleMl = 30;
       }
 
-      if ((!self.shopUnlocked) && self.bottleCount >= 4) self.unlockShop();
+      if ((!self.shopUnlocked) && self.bottleCount >= 1) self.unlockShop();
       if ((!self.counterUnlocked) && self.bottleCount >= 16) self.unlockCounter();
     }
     self.update();
