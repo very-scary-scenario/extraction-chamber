@@ -5,6 +5,7 @@ var bottleList = document.getElementById('bottles');
 var shopList = document.getElementById('shop');
 var shopElements = shopList.querySelectorAll('li');
 var bottleCountElement = document.getElementById('bottle-count');
+var counterElement = document.getElementById('counter');
 var maxBottlesElement = document.getElementById('max-bottles');
 
 function extend(base, sub) {
@@ -51,6 +52,18 @@ function Game() {
     doubler: 0,
     quonk: 0,
     wick: 0
+  };
+  self.shopUnlocked = false;
+  self.counterUnlocked = false;
+
+  self.unlockShop = function() {
+    shopList.classList.remove('hidden');
+    self.shopUnlocked = true;
+  };
+
+  self.unlockCounter = function() {
+    counterElement.classList.remove('hidden');
+    self.counterUnlocked = true;
   };
 
   self.reignite = function() {
@@ -144,6 +157,9 @@ function Game() {
       } else {
         self.currentBottleMl = 30;
       }
+
+      if ((!self.shopUnlocked) && self.bottleCount >= 4) self.unlockShop();
+      if ((!self.counterUnlocked) && self.bottleCount >= 16) self.unlockCounter();
     }
     self.update();
   };

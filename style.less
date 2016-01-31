@@ -144,11 +144,16 @@ body {
       }
     }
 
-    .bottle-count {
+    #counter {
       position: absolute;
       top: 35vh;
       right: 1rem;
       font-size: 1.4em;
+
+      transition: right 1s;
+      &.hidden {
+        right: -15rem;
+      }
 
       #bottle-count {
         font-size: 1.4em;
@@ -227,6 +232,10 @@ body {
     text-shadow: black 0 0 .05em;
     color: transparent;
     width: @shop-width;
+
+    &.hidden {
+      left: -(@shop-width + 4em);
+    }
 
     &.open {
       left: -2em;
