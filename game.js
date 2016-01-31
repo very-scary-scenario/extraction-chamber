@@ -39,6 +39,8 @@ function Game() {
   self.maxBottles = 16;
   self.baseClickValue = 30;
   self.clickMultiplier = 1;
+  self.actuatorValue = 0;
+  self.actuatorValue += self.baseClickValue;
   self.actuatorDelay = 1000;
   self.itemsOwned = {
     actuator: 0,
@@ -53,7 +55,9 @@ function Game() {
     actuator: Actuator,
     battery: Battery,
     tank: Tank,
-    doubler: Doubler
+    doubler: Doubler,
+    quonk: Quonk,
+    wick: Wick
   };
 
   self.purchase = function(itemName) {
@@ -109,7 +113,7 @@ function Game() {
   };
 
   self.handleActuator = function() {
-    self.currentBottleMl += 1;
+    self.currentBottleMl += self.actuatorValue;
     self.step();
   };
 
@@ -166,17 +170,11 @@ function Actuator() {
   self.engage();
 }
 
-function Battery() {
-  game.clickMultiplier += 1;
-}
-
-function Tank() {
-  game.maxBottles *= 2;
-}
-
-function Doubler() {
-  game.clickMultiplier *= 2;
-}
+function Battery() { game.clickMultiplier += 1; }
+function Tank() { game.maxBottles *= 2; }
+function Doubler() { game.clickMultiplier *= 2; }
+function Quonk() { game.actuatorDelay /= 2; }
+function Wick() { game.actuatorValue *= 2; }
 
 game = new Game();
 game.step();
