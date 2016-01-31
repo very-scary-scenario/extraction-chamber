@@ -38,12 +38,12 @@ function Game() {
   self.currentBottleMl = 0;
   self.bottleCount = 0;
   self.maxBottles = 16;
-  self.baseClickValue = 30;
+  self.baseClickValue = 1;
   self.clickMultiplier = 1;
   self.actuatorValue = 0;
   self.actuatorValue += self.baseClickValue;
   self.actuatorDelay = 1000;
-  self.currentHue = 0;
+  self.currentHue = Math.floor(Math.random() * 360);
   self.itemsOwned = {
     actuator: 0,
     battery: 0,
