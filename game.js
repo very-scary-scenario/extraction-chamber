@@ -5,6 +5,7 @@ var bottleList = document.getElementById('bottles');
 var shopList = document.getElementById('shop');
 var shopElements = shopList.querySelectorAll('li');
 var bottleCountElement = document.getElementById('bottle-count');
+var maxBottlesElement = document.getElementById('max-bottles');
 
 function extend(base, sub) {
   sub.prototype = Object.create(base.prototype);
@@ -37,7 +38,7 @@ function Game() {
   self.currentBottleMl = 0;
   self.bottleCount = 0;
   self.maxBottles = 16;
-  self.baseClickValue = 1;
+  self.baseClickValue = 30;
   self.clickMultiplier = 1;
   self.actuatorValue = 0;
   self.actuatorValue += self.baseClickValue;
@@ -63,7 +64,6 @@ function Game() {
     document.body.style.backgroundColor = 'hsl(' + self.currentHue.toString(10) + ',70%,40%)';
     if (self.cycleTimeout) clearTimeout(self.cycleTimeout);
     if (self.lastClick) {
-      console.log(Date.now() - self.lastClick);
       self.cycleTimeout = setTimeout(self.cycleColour, Date.now() - self.lastClick);
     }
   };
@@ -143,7 +143,6 @@ function Game() {
         self.currentBottleMl -= 30;
       } else {
         self.currentBottleMl = 30;
-        // XXX you need more tank
       }
     }
     self.update();
@@ -164,8 +163,17 @@ function Game() {
     liquidElement.style.height = ((self.currentBottleMl / 30) * 100).toString(10) + '%';
     makeListEqual(bottleList, self.bottleCount);
     bottleCountElement.innerHTML = self.bottleCount.toString(10);
+    if ((self.bottleCount === self.maxBottles) ^ bottleCountElement.classList.contains('full')) {
+      bottleCountElement.classList.toggle('full');
+    }
     self.updateShop();
   };
+
+  self.updateMaxBottlesElement = function() {
+    maxBottlesElement.innerHTML = self.maxBottles.toString(10);
+  };
+
+  self.updateMaxBottlesElement();
 
   setTimeout(function() { titleElement.classList.remove('hidden'); }, 1);
 }
@@ -190,7 +198,10 @@ function Actuator() {
 }
 
 function Battery() { game.clickMultiplier += 1; }
-function Tank() { game.maxBottles *= 2; }
+function Tank() {
+  game.maxBottles *= 2;
+  game.updateMaxBottlesElement();
+}
 function Doubler() { game.clickMultiplier *= 2; }
 function Quonk() { game.actuatorDelay /= 2; }
 function Wick() { game.actuatorValue *= 2; }

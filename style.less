@@ -147,11 +147,24 @@ body {
     .bottle-count {
       position: absolute;
       top: 35vh;
-      right: 1em;
+      right: 1rem;
       font-size: 1.4em;
 
       #bottle-count {
         font-size: 1.4em;
+
+        &.full::after {
+          position: absolute;
+          display: block;
+          content: 'full; buy a tank';
+          width: 8em;
+          right: 0;
+          top: 2.5em;
+          font-size: 1rem;
+          font-weight: 700;
+          text-align: right;
+          .swim();
+        }
       }
       &::before {
         content: ' ';
