@@ -221,7 +221,7 @@ function Tank() {
 }
 function Doubler() { game.clickMultiplier *= 2; }
 function Quonk() { game.actuatorDelay /= 2; }
-function Wick() { game.actuatorValue *= 2; }
+function Wick() { game.actuatorValue *= 1.2; }
 
 game = new Game();
 game.cycleColour();
