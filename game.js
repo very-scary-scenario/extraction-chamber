@@ -37,11 +37,12 @@ function Game() {
   self.currentBottleMl = 0;
   self.bottleCount = 0;
   self.maxBottles = 16;
-  self.baseClickValue = 30;
+  self.baseClickValue = 1;
   self.clickMultiplier = 1;
   self.actuatorValue = 0;
   self.actuatorValue += self.baseClickValue;
   self.actuatorDelay = 1000;
+  self.currentHue = 0;
   self.itemsOwned = {
     actuator: 0,
     battery: 0,
@@ -49,6 +50,22 @@ function Game() {
     doubler: 0,
     quonk: 0,
     wick: 0
+  };
+
+  self.reignite = function() {
+    self.lastClick = Date.now();
+    self.cycleColour();
+  };
+
+  self.cycleColour = function() {
+    self.currentHue += 0.01;
+    self.currentHue = self.currentHue % 360;
+    document.body.style.backgroundColor = 'hsl(' + self.currentHue.toString(10) + ',70%,40%)';
+    if (self.cycleTimeout) clearTimeout(self.cycleTimeout);
+    if (self.lastClick) {
+      console.log(Date.now() - self.lastClick);
+      self.cycleTimeout = setTimeout(self.cycleColour, Date.now() - self.lastClick);
+    }
   };
 
   self.itemConstructors = {
@@ -83,6 +100,7 @@ function Game() {
   };
 
   self.handleClick = function(e) {
+    self.reignite();
     if (!titleElement.classList.contains('hidden')) {
       titleElement.classList.add('hidden');
     }
@@ -113,6 +131,7 @@ function Game() {
   };
 
   self.handleActuator = function() {
+    self.reignite();
     self.currentBottleMl += self.actuatorValue;
     self.step();
   };
@@ -177,6 +196,7 @@ function Quonk() { game.actuatorDelay /= 2; }
 function Wick() { game.actuatorValue *= 2; }
 
 game = new Game();
+game.cycleColour();
 game.step();
 
 for (var i = 0; i < shopElements.length; i++) {
