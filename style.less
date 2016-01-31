@@ -182,6 +182,20 @@ body {
       }
     }
 
+    #next-video-target {
+      position: absolute;
+      top: 35vh;
+      margin-top: -1em;
+      right: 1rem;
+      transition: right 1s;
+      &.hidden {
+        right: -15rem;
+      }
+      &::before {
+        content: 'more at: ';
+      }
+    }
+
     .actuators {
       display: block;
       position: absolute;

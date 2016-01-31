@@ -8,6 +8,7 @@ var bottleCountElement = document.getElementById('bottle-count');
 var counterElement = document.getElementById('counter');
 var maxBottlesElement = document.getElementById('max-bottles');
 var playerContainer = document.getElementById('player-container');
+var nextVideoTargetElement = document.getElementById('next-video-target');
 
 var youtubeIds = [
   'mYRAwWQYm0o',
@@ -89,6 +90,7 @@ function Game() {
             playerContainer.classList.remove('visible');
             playerContainer.innerHTML = '<div id="player"></div>';
             document.body.classList.remove('playing');
+            self.update();
           }
         }
       }
@@ -224,9 +226,13 @@ function Game() {
     if ((self.bottleCount === self.maxBottles) ^ bottleCountElement.classList.contains('full')) {
       bottleCountElement.classList.toggle('full');
     }
-    if (self.bottleCount >= self.nextVideoTarget) {
+    if (youtubeIds[self.currentVideoIndex] !== undefined && self.bottleCount >= self.nextVideoTarget) {
       self.playNextVideo();
       self.nextVideoTarget *= 2;
+      nextVideoTargetElement.innerHTML = self.nextVideoTarget.toString(10);
+      nextVideoTargetElement.classList.remove('hidden');
+    } else if (youtubeIds[self.currentVideoIndex] === undefined) {
+      nextVideoTargetElement.classList.add('hidden');
     }
     self.updateShop();
   };
