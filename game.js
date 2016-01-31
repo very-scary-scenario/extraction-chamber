@@ -241,6 +241,7 @@ function Game() {
   };
   self.shopUnlocked = false;
   self.counterUnlocked = false;
+  self.vapeProbability = Math.pow(2, -youtubeIds.length);
 
   self.playNextVideo = function() {
     document.body.classList.add('playing');
@@ -263,6 +264,7 @@ function Game() {
       }
     });
     self.currentVideoIndex += 1;
+    self.vapeProbability *= 2;
     playerContainer.classList.add('visible');
   };
 
@@ -329,7 +331,7 @@ function Game() {
   };
 
   self.playVapeWords = function() {
-    self.playFromList(vapeWordFilenames, 'vape-words');
+    if (Math.random() < self.vapeProbability) self.playFromList(vapeWordFilenames, 'vape-words');
   };
 
   self.handleClick = function(e) {
