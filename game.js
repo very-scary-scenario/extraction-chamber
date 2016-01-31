@@ -89,6 +89,11 @@ function Game() {
     for (var i = 0; i < self.itemsOwned.battery; i++) {
       var batteryElement = document.createElement('li');
       batteryList.appendChild(batteryElement);
+      for (var j = 2; j <= 7; j++) {
+        if (Math.random() * j < 1) {
+          batteryElement.classList.add('r' + j.toString(10));
+        }
+      }
     }
 
     document.body.appendChild(batteryList);
