@@ -52,7 +52,8 @@ function Game() {
   self.itemConstructors = {
     actuator: Actuator,
     battery: Battery,
-    tank: Tank
+    tank: Tank,
+    doubler: Doubler
   };
 
   self.purchase = function(itemName) {
@@ -171,6 +172,10 @@ function Battery() {
 
 function Tank() {
   game.maxBottles *= 2;
+}
+
+function Doubler() {
+  game.clickMultiplier *= 2;
 }
 
 game = new Game();
