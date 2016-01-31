@@ -58,6 +58,7 @@ function Game() {
   self.maxBottles = 16;
   self.baseClickValue = 30;
   self.clickMultiplier = 1;
+  self.nextVideoTarget = 4;
   self.actuatorValue = 0;
   self.actuatorValue += self.baseClickValue;
   self.actuatorDelay = 1000;
@@ -74,11 +75,21 @@ function Game() {
   self.counterUnlocked = false;
 
   self.playNextVideo = function() {
+    document.body.classList.add('playing');
     new YT.Player('player', {
       videoId: youtubeIds[self.currentVideoIndex],
+      playerVars: {
+        autoplay: 1,
+        controls: 0,
+        fs: 0
+      },
       events: {
         'onStateChange': function(e) {
-          if (e.data === 0) playerContainer.classList.remove('visible');
+          if (e.data === 0) {
+            playerContainer.classList.remove('visible');
+            playerContainer.innerHTML = '<div id="player"></div>';
+            document.body.classList.remove('playing');
+          }
         }
       }
     });
@@ -87,7 +98,6 @@ function Game() {
   };
 
   self.unlockShop = function() {
-    self.playNextVideo();
     shopList.classList.remove('hidden');
     self.shopUnlocked = true;
   };
@@ -213,6 +223,10 @@ function Game() {
     bottleCountElement.innerHTML = self.bottleCount.toString(10);
     if ((self.bottleCount === self.maxBottles) ^ bottleCountElement.classList.contains('full')) {
       bottleCountElement.classList.toggle('full');
+    }
+    if (self.bottleCount >= self.nextVideoTarget) {
+      self.playNextVideo();
+      self.nextVideoTarget *= 2;
     }
     self.updateShop();
   };
