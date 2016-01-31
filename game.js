@@ -7,15 +7,31 @@ var shopElements = shopList.querySelectorAll('li');
 var bottleCountElement = document.getElementById('bottle-count');
 var counterElement = document.getElementById('counter');
 var maxBottlesElement = document.getElementById('max-bottles');
+var playerContainer = document.getElementById('player-container');
 
-function extend(base, sub) {
-  sub.prototype = Object.create(base.prototype);
-  sub.prototype.constructor = sub;
-  Object.defineProperty(sub.prototype, 'constructor', {
-    enumerable: false,
-    value: sub
-  });
+var youtubeIds = [
+  'mYRAwWQYm0o',
+  'ncNB2_YsYno',
+  'q1LsfrZ7Dck',
+  'bh9MlkH54Gk',
+  'R0KZnajUOo4',
+  'MGsumx_Q9ys',
+  '5HikLX8hfYM',
+  'EXE2I37HaW8',
+  'gLxcw3o6dRY',
+  'MJHCF094NR4'
+];
+
+
+function initYoutubeAPI() {
+  var tag = document.createElement('script');
+
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
+
+initYoutubeAPI();
 
 function makeListEqual(list, count) {
   var target;
@@ -36,6 +52,7 @@ function makeListEqual(list, count) {
 
 function Game() {
   var self = this;
+  self.currentVideoIndex = 0;
   self.currentBottleMl = 0;
   self.bottleCount = 0;
   self.maxBottles = 16;
@@ -56,7 +73,21 @@ function Game() {
   self.shopUnlocked = false;
   self.counterUnlocked = false;
 
+  self.playNextVideo = function() {
+    new YT.Player('player', {
+      videoId: youtubeIds[self.currentVideoIndex],
+      events: {
+        'onStateChange': function(e) {
+          if (e.data === 0) playerContainer.classList.remove('visible');
+        }
+      }
+    });
+    self.currentVideoIndex += 1;
+    playerContainer.classList.add('visible');
+  };
+
   self.unlockShop = function() {
+    self.playNextVideo();
     shopList.classList.remove('hidden');
     self.shopUnlocked = true;
   };
