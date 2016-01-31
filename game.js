@@ -39,7 +39,7 @@ function Game() {
   self.currentBottleMl = 0;
   self.bottleCount = 0;
   self.maxBottles = 16;
-  self.baseClickValue = 1;
+  self.baseClickValue = 30;
   self.clickMultiplier = 1;
   self.actuatorValue = 0;
   self.actuatorValue += self.baseClickValue;
@@ -169,8 +169,9 @@ function Game() {
       var shopElement = shopElements[i];
       var itemName = shopElement.getAttribute('data-item');
       var owned = self.itemsOwned[itemName];
-      if (owned) {
-        shopElement.setAttribute('data-owned', owned.toString(10));
+      var canAfford = parseInt(shopElement.getAttribute('data-value'), 10) <= self.bottleCount;
+      if (!!(owned || canAfford) ^ shopElement.classList.contains('visible')) {
+        shopElement.classList.toggle('visible');
       }
     }
   };

@@ -226,10 +226,10 @@ body {
     left: -@shop-width;
     font-size: .8em;
     padding: .5em 3.5em .5em 1.5em;
+    text-shadow: black 0 0 .05em;
     margin: 1em 3em;
     display: table;
     transition: left 0.5s;
-    text-shadow: black 0 0 .05em;
     color: transparent;
     width: @shop-width;
 
@@ -244,6 +244,8 @@ body {
     li {
       cursor: pointer;
       display: table-row;
+      text-shadow: black 0 0 2em;
+      transition: text-shadow 1s;
 
       div {
         display: table-cell;
@@ -274,6 +276,16 @@ body {
         .sprite('bottle.png');
         background-size: 2em auto;
         background-position: center right;
+        opacity: 0;
+        transition: opacity 1s;
+      }
+
+      &.visible {
+        text-shadow: black 0 0 .05em;
+
+        &::before {
+          opacity: 1;
+        }
       }
     }
 
