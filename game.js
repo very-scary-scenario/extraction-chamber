@@ -11,16 +11,16 @@ var playerContainer = document.getElementById('player-container');
 var nextVideoTargetElement = document.getElementById('next-video-target');
 
 var youtubeIds = [
-  'mYRAwWQYm0o',
-  'ncNB2_YsYno',
-  'q1LsfrZ7Dck',
-  'bh9MlkH54Gk',
-  'R0KZnajUOo4',
-  'MGsumx_Q9ys',
-  '5HikLX8hfYM',
-  'EXE2I37HaW8',
-  'gLxcw3o6dRY',
-  'MJHCF094NR4'
+  'mYRAwWQYm0o'
+  //'ncNB2_YsYno',
+  //'q1LsfrZ7Dck',
+  //'bh9MlkH54Gk',
+  //'R0KZnajUOo4',
+  //'MGsumx_Q9ys',
+  //'5HikLX8hfYM',
+  //'EXE2I37HaW8',
+  //'gLxcw3o6dRY',
+  //'MJHCF094NR4'
 ];
 
 var vapeWordFilenames = [
@@ -190,6 +190,45 @@ var vapeWordFilenames = [
   'p41.mp3'
 ];
 
+var vapeFilenames = [
+  'av01.mp3',
+  'av02.mp3',
+  'av03.mp3',
+  'av04.mp3',
+  'av05.mp3',
+  'av06.mp3',
+  'av07.mp3',
+  'av08.mp3',
+  'av09.mp3',
+  'av10.mp3',
+  'av11.mp3',
+  'cv01.mp3',
+  'cv02.mp3',
+  'cv03.mp3',
+  'cv04.mp3',
+  'cv05.mp3',
+  'cv06.mp3',
+  'cv07.mp3',
+  'cv08.mp3',
+  'cv09.mp3',
+  'cv10.mp3',
+  'iv01.mp3',
+  'iv02.mp3',
+  'iv03.mp3',
+  'iv04.mp3',
+  'iv05.mp3',
+  'iv06.mp3',
+  'iv07.mp3',
+  'iv08.mp3',
+  'iv09.mp3',
+  'iv10.mp3',
+  'pv01.mp3',
+  'pv02.mp3',
+  'pv03.mp3',
+  'pv04.mp3',
+  'pv05.mp3',
+  'pv06.mp3'
+];
 
 function initYoutubeAPI() {
   var tag = document.createElement('script');
@@ -224,7 +263,7 @@ function Game() {
   self.currentBottleMl = 0;
   self.bottleCount = 0;
   self.maxBottles = 16;
-  self.baseClickValue = 1;
+  self.baseClickValue = 30;
   self.clickMultiplier = 1;
   self.nextVideoTarget = 4;
   self.actuatorValue = 0;
@@ -283,8 +322,12 @@ function Game() {
     self.cycleColour();
   };
 
+  self.videosOver = function() {
+    return youtubeIds[self.currentVideoIndex] === undefined;
+  };
+
   self.cycleColour = function() {
-    self.currentHue += 0.01;
+    self.currentHue += self.videosOver() ? 3 : 0.01;
     self.currentHue = self.currentHue % 360;
     document.body.style.backgroundColor = 'hsl(' + self.currentHue.toString(10) + ',70%,40%)';
     if (self.cycleTimeout) clearTimeout(self.cycleTimeout);
@@ -330,13 +373,15 @@ function Game() {
     element.play();
   };
 
-  self.playVapeWords = function() {
-    if (Math.random() < self.vapeProbability) self.playFromList(vapeWordFilenames, 'vape-words');
-  };
+  self.playVapeWords = function() { self.playFromList(vapeWordFilenames, 'vape-words'); };
+  self.playVape = function() { self.playFromList(vapeFilenames, 'vape'); };
 
   self.handleClick = function(e) {
     self.reignite();
-    self.playVapeWords();
+    if (Math.random() < self.vapeProbability) {
+      if (!self.videosOver()) self.playVapeWords();
+      else self.playVape();
+    }
     if (!titleElement.classList.contains('hidden')) {
       titleElement.classList.add('hidden');
     }
@@ -406,7 +451,7 @@ function Game() {
     if ((self.bottleCount === self.maxBottles) ^ bottleCountElement.classList.contains('full')) {
       bottleCountElement.classList.toggle('full');
     }
-    if (youtubeIds[self.currentVideoIndex] !== undefined && self.bottleCount >= self.nextVideoTarget) {
+    if (!self.videosOver() && self.bottleCount >= self.nextVideoTarget) {
       self.playNextVideo();
       self.nextVideoTarget *= 2;
       nextVideoTargetElement.innerHTML = self.nextVideoTarget.toString(10);
