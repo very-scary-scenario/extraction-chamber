@@ -193,3 +193,6 @@ function handleClick(e) {
 }
 document.getElementById('bottle').addEventListener('touchend', handleClick);
 document.getElementById('bottle').addEventListener('click', handleClick);
+document.addEventListener('scroll', function(e) {
+  e.preventDefault();
+});
