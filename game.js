@@ -1,5 +1,6 @@
 var game;
 var titleElement = document.getElementById('title');
+var vapeTitleElement = document.getElementById('vape-title');
 var liquidElement = document.getElementById('liquid');
 var bottleList = document.getElementById('bottles');
 var shopList = document.getElementById('shop');
@@ -11,16 +12,16 @@ var playerContainer = document.getElementById('player-container');
 var nextVideoTargetElement = document.getElementById('next-video-target');
 
 var youtubeIds = [
-  'mYRAwWQYm0o'
-  //'ncNB2_YsYno',
-  //'q1LsfrZ7Dck',
-  //'bh9MlkH54Gk',
-  //'R0KZnajUOo4',
-  //'MGsumx_Q9ys',
-  //'5HikLX8hfYM',
-  //'EXE2I37HaW8',
-  //'gLxcw3o6dRY',
-  //'MJHCF094NR4'
+  'mYRAwWQYm0o',
+  'ncNB2_YsYno',
+  'q1LsfrZ7Dck',
+  'bh9MlkH54Gk',
+  'R0KZnajUOo4',
+  'MGsumx_Q9ys',
+  '5HikLX8hfYM',
+  'EXE2I37HaW8',
+  'gLxcw3o6dRY',
+  'MJHCF094NR4'
 ];
 
 var vapeWordFilenames = [
@@ -263,7 +264,7 @@ function Game() {
   self.currentBottleMl = 0;
   self.bottleCount = 0;
   self.maxBottles = 16;
-  self.baseClickValue = 30;
+  self.baseClickValue = 1;
   self.clickMultiplier = 1;
   self.nextVideoTarget = 4;
   self.actuatorValue = 0;
@@ -460,6 +461,10 @@ function Game() {
       nextVideoTargetElement.classList.add('hidden');
     }
     self.updateShop();
+
+    if (vapeTitleElement.classList.contains('hidden') ^ !self.videosOver()) {
+      vapeTitleElement.classList.toggle('hidden');
+    }
   };
 
   self.updateMaxBottlesElement = function() {
