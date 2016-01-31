@@ -26,7 +26,8 @@ function Game() {
   var self = this;
   self.currentBottleMl = 0;
   self.bottleCount = 0;
-  self.baseClickValue = 1;
+  self.maxBottles = 16;
+  self.baseClickValue = 30;
   self.clickMultiplier = 1;
   self.actuatorDelay = 1000;
   self.itemsOwned = {
@@ -40,7 +41,8 @@ function Game() {
 
   self.itemConstructors = {
     actuator: Actuator,
-    battery: Battery
+    battery: Battery,
+    tank: Tank
   };
 
   self.purchase = function(itemName) {
@@ -93,9 +95,14 @@ function Game() {
   };
 
   self.step = function() {
-    while (self.currentBottleMl >= 30) {
-      self.bottleCount += 1;
-      self.currentBottleMl -= 30;
+    while (self.currentBottleMl > 30) {
+      if (self.bottleCount < self.maxBottles) {
+        self.bottleCount += 1;
+        self.currentBottleMl -= 30;
+      } else {
+        self.currentBottleMl = 30;
+        // XXX you need more tank
+      }
     }
     self.update();
   };
@@ -138,8 +145,11 @@ function Actuator() {
 }
 
 function Battery() {
-  var self = this;
   game.clickMultiplier += 1;
+}
+
+function Tank() {
+  game.maxBottles *= 2;
 }
 
 game = new Game();
