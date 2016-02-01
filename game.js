@@ -276,7 +276,7 @@ function Game() {
     battery: 0,
     tank: 0,
     doubler: 0,
-    quonk: 0,
+    squonk: 0,
     wick: 0
   };
   self.shopUnlocked = false;
@@ -342,7 +342,7 @@ function Game() {
     battery: Battery,
     tank: Tank,
     doubler: Doubler,
-    quonk: Quonk,
+    squonk: Squonk,
     wick: Wick
   };
 
@@ -501,7 +501,7 @@ function Tank() {
   game.updateMaxBottlesElement();
 }
 function Doubler() { game.clickMultiplier *= 2; }
-function Quonk() { game.actuatorDelay /= 2; }
+function Squonk() { game.actuatorDelay /= 2; }
 function Wick() { game.actuatorValue *= 1.2; }
 
 game = new Game();
